@@ -1,0 +1,12 @@
+name: converter
+version: 0.0.1
+description: A tool for image conversion
+environment:
+  sdk: '>=2.10.0 <3.0.0'
+##author: Ashfaq Uddin Ahmed <ashfaq.sayeem@gmail.com>
+
+homepage: https://github.com/Ashfaq-Uddin
+
+dependencies:
+  prompter_aua: 0.0.1
+  image: any

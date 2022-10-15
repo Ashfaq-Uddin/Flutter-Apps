@@ -1,0 +1,14 @@
+{
+  "configVersion": 2,
+  "packages": [
+    {
+      "name": "prompter_aua",
+      "rootUri": "../",
+      "packageUri": "lib/",
+      "languageVersion": "2.10"
+    }
+  ],
+  "generated": "2022-10-14T13:42:06.231837Z",
+  "generator": "pub",
+  "generatorVersion": "2.19.0-269.0.dev"
+}

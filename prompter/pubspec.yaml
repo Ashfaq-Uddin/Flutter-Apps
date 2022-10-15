@@ -1,0 +1,8 @@
+name: prompter_aua
+version: 0.0.1
+description: Library to create CLI wizard
+environment:
+  sdk: '>=2.10.0 <3.0.0'
+##author: Ashfaq Uddin Ahmed <ashfaq.sayeem@gmail.com>
+
+homepage: https://github.com/Ashfaq-Uddin

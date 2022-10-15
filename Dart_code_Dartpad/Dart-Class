@@ -1,0 +1,188 @@
+void main() {
+  var person = new Person("Ahmed");
+
+  person.printname();
+}
+
+class Person {
+  String? firstName;
+  
+  Person(this.firstName);
+
+  printname() {
+    print(firstName);
+  }
+}
+////////////////////////////////////////////////////////////////////////////////
+void main() {
+  var deck = new Deck();
+  //deck.shuffle();
+  //print(deck.cardsWithSuit("Clubs"));
+  //print(deck);
+  //print(deck.deal(3));
+  print(deck);
+  deck.removeCard("Clubs", "Ace");
+  print(deck);
+}
+
+class Deck {
+  List<Card> cards = [];
+
+  Deck() {
+    var ranks = ["Ace", "Two", "Three", "Four", "Five"];
+    var suits = ["Clubs", "Spades", "Hearts", "Diamonds"];
+
+    for (var suit in suits) {
+      for (var rank in ranks) {
+        var card = new Card(
+          //rank: rank,
+          suit: suit,
+          rank: rank,
+        );
+        cards.add(card);
+      }
+    }
+  }
+  toString() {
+    return (cards.toString());
+  }
+
+  shuffle() {
+    cards.shuffle();
+  }
+
+  cardsWithSuit(String suit) {
+    return cards.where((card) => card.suit == suit);
+  }
+
+  deal(int HandSize) {
+    var hand = cards.sublist(0, HandSize);
+    cards = cards.sublist(HandSize);
+
+    return hand;
+  }
+
+  removeCard(String suit, String rank) {
+    cards.removeWhere((card) => card.suit == suit && card.rank == rank);
+  }
+}
+
+class Card {
+  String? rank;
+  String? suit;
+
+  Card({this.rank, this.suit});
+
+  toString() {
+    return ("$rank of $suit");
+  }
+}
+////////////////////////////////////////////////////////////////////////////////
+import "dart:convert";
+void main(){
+  
+  var rawJson = '{"url":"https://cpc.northsouth.edu/Job/job_details/2331","id":1}';
+  
+  var parseJson = json.decode(rawJson);
+  //print (ParseJson['id']);
+  //var imagemodel = new ImageModel(parseJson['id'],parseJson['url']);
+  var imagemodel = new ImageModel.fromJson(parseJson);
+  print (imagemodel.id);
+}
+
+
+class ImageModel{
+  
+  int? id;
+  String? url;
+  
+  ImageModel(this.id,this.url);
+  
+  
+  ImageModel.fromJson(parseJson){
+    id = parseJson['id'];
+    url = parseJson['url'];
+  }
+  
+////////////////////////////////////////////////////////////////////////////////
+import 'dart:async';
+
+class Cake {}
+
+class Order {
+  late String type;
+
+  Order(this.type);
+}
+
+void main() {
+  final controller = new StreamController();
+
+  final order = new Order('justine Beiber');
+
+  final baker =
+      new StreamTransformer.fromHandlers(handleData: (cakeType, sink) {
+    if (cakeType == 'chocolate') {
+      sink.add(new Cake());
+    } else {
+      sink.addError('I cant make this cake');
+    }
+  });
+
+  controller.sink.add(order);
+
+  controller.stream.map((order) => order.type).transform(baker).listen(
+      (cake) => print('Here is your cake'),
+      onError: (err) => print(err));
+}
+/////////////////////////////////////////////////////////////////////////////
+import 'dart:html';
+
+void main() {
+  final button = querySelector('button');
+
+  button?.onClick
+      .timeout(new Duration(seconds: 2),
+          onTimeout: (sink) => sink.addError('You lost!'))
+      .listen((event) {}, onError: (err) => print(err));
+}
+
+/////////////////////////////////////////////////////////////////////////
+import 'dart:html';
+
+void main() {
+  final button = querySelector('button') as ButtonElement;
+  final input = querySelector('input') as InputElement;
+
+  button.onClick
+      .take(4)
+      .where((event)=>input.value == 'banana')
+      .listen(
+            (event)=> print('Congrats! You Won'),
+            onDone:()=> print('Sorry! Your guesses are over.'),
+    );
+}
+////////////////////////////////////////////////////////////////////
+///Email verifier//////////////////////////////////////////////////
+
+import 'dart:html';
+import 'dart:async';
+
+void main() {
+  final input = querySelector('input') as InputElement;
+  final div = querySelector('div') as DivElement;
+  final validator = new StreamTransformer.fromHandlers(
+      handleData: (dynamic inputValue, sink) {
+    if (inputValue.contains('@')) {
+      sink.add(inputValue);
+    } else {
+      sink.addError('Invalid Email Address');
+    }
+  });
+
+  input.onInput
+      .map((dynamic event) => (event.target.value))
+      .transform(validator)
+      .listen((inputValue) => div.innerHtml = '',
+          onError: (err) => div.innerHtml = err);
+}
